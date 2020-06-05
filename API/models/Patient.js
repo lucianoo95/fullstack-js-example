@@ -18,6 +18,10 @@ const PatientSchema = new Schema({
     type: String,
     trim: true
   },
+  cellphone: {
+    type: String,
+    trim: true
+  },
   symptoms: {
     type: String,
     trim: true

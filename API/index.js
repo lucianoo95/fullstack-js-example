@@ -1,9 +1,26 @@
 // importar modulos
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // iniciar express
 const app = express();
+
+// Configurar CORS
+const whitelist = ['http://localhost:3000'];
+const corsOptions = {
+  origin: (origin, callback) => {
+    const exist = whitelist.some(domain => domain === origin);
+    if (exist) {
+      callback(null, true);
+    } else {
+      callback(new Error('NO permitido por CORS'));
+    }
+  }
+}
+
+// Habilitar CORS
+app.use(cors());
 
 // Conectar a mongoDB
 mongoose.Promise = global.Promise;
@@ -13,7 +30,7 @@ mongoose.connect('mongodb://localhost/veterinary', {
   useFindAndModify: false
 });
 
-//Express json
+//Habilitar archivos json cuando se soliciten metodos 'POST' o 'PUT'
 app.use(express.json());
 
 // Middlewares: Routes
